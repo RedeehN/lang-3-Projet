@@ -43,8 +43,8 @@ Exp expression():
 {
     a=term()
     (
-      "+" b=expression() {return new Add(a,b) }
-    | "-" b=expression() {return new Sub(a,b) }
+      "+" b=expression() { return new Add(a,b); }
+    | "-" b=expression() { return new Sub(a,b); }
     )? { return a; }
 }
 
@@ -55,8 +55,8 @@ Exp term():
 {
     a=factor()
     (
-      "*" b=factor() { return new Mul(a,b)  }
-    | "/" b=factor() { return new Div(a,b)  }
+      "*" b=factor() { return new Mul(a,b);  }
+    | "/" b=factor() { return new Div(a,b);  }
     )* { return a; }
 }
 

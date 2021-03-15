@@ -30,7 +30,7 @@ public class VisitorEval extends Visitor{
 
     public double visit(final Mul pMul)
     {
-        return pMul.getExp1().accept(this) / pMul.getExp2().accept(this) ;
+        return pMul.getExp1().accept(this) * pMul.getExp2().accept(this) ;
     }
 
 
