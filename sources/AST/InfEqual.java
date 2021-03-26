@@ -1,3 +1,6 @@
+
+
+
 public class InfEqual extends Bool{
 
     public InfEqual(final Exp exp1, final Exp exp2 ){

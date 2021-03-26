@@ -1,6 +1,5 @@
 
 
-
 public class Mul extends Binop{
 
 

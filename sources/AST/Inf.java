@@ -1,3 +1,4 @@
+
 public class Inf extends Bool{
 
     public Inf(final Exp exp1, final Exp exp2 ){

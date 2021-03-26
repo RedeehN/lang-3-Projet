@@ -1,3 +1,4 @@
+
 public class Equal extends Bool{
 
     public Equal(final Exp exp1, final Exp exp2 ){

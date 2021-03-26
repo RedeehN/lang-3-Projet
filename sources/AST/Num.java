@@ -1,6 +1,4 @@
 
-
-
 public class Num extends Exp{
 
     private double aNum;

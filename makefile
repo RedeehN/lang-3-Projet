@@ -14,7 +14,7 @@ PARSER=sources/Parser/Jagger.jj
 PARSERSOURCESDIR=$(BUILDDIR)Parser/
 PARSERSOURCES=$(PARSERSOURCESDIR)*.java
 
-APPS=sources/Main.java
+APPS=sources/AST/Main.java
 
 JAVACC=javacc
 JAVAC=javac
@@ -22,11 +22,11 @@ JAVA=java
 RM=rm -rf
 MKDIR=mkdir -p
 
-.PHONY : all build echo directories build-apps build-package build-parser generate-parser build-tests
+.PHONY : all build echo directories build-apps build-package build-parser generate-parser 
 
 all : build
 
-build : directories build-package build-parser build-apps build-tests
+build : directories build-package build-parser build-apps 
 
 build-package :
 	$(JAVAC) -d $(BUILDDIR) $(SOURCES)
@@ -40,8 +40,7 @@ build-parser : generate-parser
 build-apps :
 	$(JAVAC) -d $(BUILDDIR) -cp $(BUILDDIR) $(APPS)
 
-build-tests :
-	$(JAVAC) -d $(BUILDDIR) -cp $(BUILDDIR) $(TESTS)
+
 
 clean :
 	$(RM) $(BUILDDIR)*
