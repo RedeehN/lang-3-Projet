@@ -68,3 +68,12 @@ Exp factor():
       t=<NUMBER> { return new Num(Double.parseDouble(t.toString())); }
     | "(" e=expression() ")" { return e; }
 }
+
+
+//print
+Exp print():
+{ Exp e; }
+{
+        "print(" e = condition() ")" {return new Print(e);}
+    |   e = condition() {return e;}
+}
