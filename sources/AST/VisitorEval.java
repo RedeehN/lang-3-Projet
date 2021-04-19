@@ -86,4 +86,15 @@ public class VisitorEval extends Visitor{
         
         return val;
     }
+
+    public double visit(final Minus pMinus)
+    {
+        return - pMinus.getExp1().accept(this);
+    }
+
+    public double visit(final Plus pPlus)
+    {
+        return + pPlus.getExp1().accept(this);
+    }
+    
 }

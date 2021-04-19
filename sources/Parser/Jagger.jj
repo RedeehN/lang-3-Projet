@@ -60,6 +60,47 @@ Exp term():
     )* { return a; }
 }
 
+// Condition 
+// 
+Exp cond():
+{ Exp a,b; }
+{
+    a=expression()
+    (
+      ">" b=expression() { return new Sup(a,b); }
+    | "<" b=expression() { return new Inf(a,b); }
+    | ">=" b=expression() { return new SupEqual(a,b); }
+    | "<=" b=expression() { return new InfEqual(a,b); }
+    | "=" b=expression() { return new Equal(a,b); }
+    | "<>" b=expression() { return new NotEqual(a,b); }
+    )? { return a; }
+}
+
+
+
+// Term.
+// T -> F ('*'F | '/'F)*
+Exp term():
+{ Exp a,b; }
+{
+    a=Unary()
+    (
+      "*" b=Unary() { return new Mul(a,b);  }
+    | "/" b=Unary() { return new Div(a,b);  }
+    )* { return a; }
+}
+
+Exp Unary():
+{ Exp e; }
+{
+    
+    (
+      "+" e=factor() { return new Plus(e); }
+    | "-" e=factor() { return new Minus(e);  }
+    | e=factor { return e; }
+}
+
+
 // Factor of an expression.
 // F -> <NUMBER> | "(" E ")"
 Exp factor():
@@ -68,4 +109,6 @@ Exp factor():
       t=<NUMBER> { return new Num(Double.parseDouble(t.toString())); }
     | "(" e=expression() ")" { return e; }
 }
+
+
 

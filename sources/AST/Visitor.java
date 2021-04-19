@@ -13,5 +13,7 @@ public abstract class Visitor {
     public abstract double visit(final InfEqual pInfEqual);
     public abstract double visit(final SupEqual pSupEqual);
     public abstract double visit(final Print pPrint);
+    public abstract double visit(final Minus pMinus);
+    public abstract double visit(final Plus pPlus);
     
 }
