@@ -80,10 +80,20 @@ public class VisitorEval extends Visitor{
     @Override
     public double visit(Print pPrint) {
         double val =pPrint.accept(this);
-        System.out.print("print(");
-        System.out.print(val);
-        System.out.println(")");
+        //System.out.print("print(");
+        //System.out.print(val);
+        //System.out.println(")");
         
         return val;
+    }
+
+    @Override
+    public double visit(IfThenElse pIfThenElse) {
+        if(pIfThenElse.getConf().accept(this)==1){
+            pIfThenElse.getThen().accept(this);
+        }else{
+            pIfThenElse.getElse().accept(this);
+        }
+        return 0;
     }
 }

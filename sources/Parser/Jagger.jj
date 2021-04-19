@@ -22,6 +22,9 @@ TOKEN:
     < NUMBER: (<DIGIT>)+ ("." (<DIGIT>)*)? >  // A decimal number.
 |   < DIGIT: ["0"-"9"] >                      // A decimal digit.
 |   < EOL: "\n" >                             // End of line.
+|   < PRINT : "print">
+|   < LRB : "(">
+|   < RRB : ")">
 }
 
 // Main lopp: read expressions on a line until end of file.
@@ -34,6 +37,14 @@ void mainloop():
                              System.out.println(a.accept(new VisitorEval())); }
     )*
     <EOF>
+}
+
+
+//fonction print 
+Exp print():
+{Exp e;}
+{
+    <PRINT><LRB> e=expression() <RRB> {return new Print(e);}
 }
 
 // Expression (the axiom).
