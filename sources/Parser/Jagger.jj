@@ -1,3 +1,4 @@
+
 // Options for JavaCC.
 options { LOOKAHEAD=1; FORCE_LA_CHECK=true; }
 
@@ -25,6 +26,10 @@ TOKEN:
 |   < PRINT : "print">
 |   < LRB : "(">
 |   < RRB : ")">
+
+|   < IF : "if">
+|   < THEN : "then">
+|   < ELSE : "else">
 }
 
 // Main lopp: read expressions on a line until end of file.
@@ -33,18 +38,27 @@ void mainloop():
 { Exp a; }
 {
     (
-      a=expression() <EOL> { 
+      a=ifScope() <EOL> { 
                              System.out.println(a.accept(new VisitorEval())); }
     )*
     <EOF>
 }
 
 
+Exp ifScope():
+{ Exp e, ifExp, thenExp, elseExp; }
+{
+	  <IF> ifExp=cond() <THEN> thenExp=cond() <ELSE> elseExp=cond() { return new Condition(ifExp, thenExp, elseExp); }
+	| e=printScope() { return e; }
+}
+
+
 //fonction print 
-Exp print():
+Exp printScope():
 {Exp e;}
 {
-    <PRINT><LRB> e=expression() <RRB> {return new Print(e);}
+    <PRINT><LRB> e=cond() <RRB> {return new Print(e);}
+    | e=cond() {return e;}
 }
 
 // Expression (the axiom).
@@ -59,17 +73,47 @@ Exp expression():
     )? { return a; }
 }
 
+
+
+// Condition 
+// 
+Exp cond():
+{ Exp a,b; }
+{
+    a=expression()
+    (
+      ">" b=expression() { return new Sup(a,b); }
+    | "<" b=expression() { return new Inf(a,b); }
+    | ">=" b=expression() { return new SupEqual(a,b); }
+    | "<=" b=expression() { return new InfEqual(a,b); }
+    | "=" b=expression() { return new Equal(a,b); }
+    | "<>" b=expression() { return new NotEqual(a,b); }
+    )? { return a; }
+}
+
 // Term.
 // T -> F ('*'F | '/'F)*
 Exp term():
 { Exp a,b; }
 {
-    a=factor()
+    a=Unary()
     (
-      "*" b=factor() { return new Mul(a,b);  }
-    | "/" b=factor() { return new Div(a,b);  }
+      "*" b=Unary() { return new Mul(a,b);  }
+    | "/" b=Unary() { return new Div(a,b);  }
     )* { return a; }
 }
+
+Exp Unary():
+{ Exp e; }
+{
+    e=factor()
+    (
+      "+" e=factor() { return new Plus(e); }
+    | "-" e=factor() { return new Minus(e);  }
+    
+    ) {return e;}
+}
+
 
 // Factor of an expression.
 // F -> <NUMBER> | "(" E ")"

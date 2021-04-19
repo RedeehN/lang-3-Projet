@@ -6,9 +6,9 @@ public class IfThenElse extends Exp
     private Exp aThen;
     private Exp aElse;
     public IfThenElse(Exp pConf,Exp pThen, Exp pElse){
-        this.aConf(pConf);
-        this.setaThen(pThen);
-        this.setaElse(pElse);
+        this.aConf=pConf;
+        this.aThen=pThen;
+        this.aElse=pElse;
     }
 
     public Exp getElse() {
@@ -24,7 +24,7 @@ public class IfThenElse extends Exp
         return aConf;
     }
 
-
+    @Override
     public double accept(Visitor v){
         return v.visit(this);
     }
