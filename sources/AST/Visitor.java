@@ -1,4 +1,5 @@
 
+
 public abstract class Visitor {
 
     public abstract double visit(final Num pNum);
@@ -15,5 +16,6 @@ public abstract class Visitor {
     public abstract double visit(final Print pPrint);
     public abstract double visit(final Minus pMinus);
     public abstract double visit(final Plus pPlus);
+    public abstract double visit(final IfThenElse pIfThenElse);
     
 }

@@ -1,6 +1,4 @@
 
-
-
 public class VisitorEval extends Visitor{
 
     public VisitorEval(){
@@ -77,16 +75,6 @@ public class VisitorEval extends Visitor{
         return 0;
     }
 
-    @Override
-    public double visit(Print pPrint) {
-        double val =pPrint.accept(this);
-        System.out.print("print(");
-        System.out.print(val);
-        System.out.println(")");
-        
-        return val;
-    }
-
     public double visit(final Minus pMinus)
     {
         return - pMinus.getExp1().accept(this);
@@ -96,5 +84,24 @@ public class VisitorEval extends Visitor{
     {
         return + pPlus.getExp1().accept(this);
     }
-    
+
+    @Override
+    public double visit(Print pPrint) {
+        double val =pPrint.accept(this);
+        //System.out.print("print(");
+        //System.out.print(val);
+        //System.out.println(")");
+        
+        return val;
+    }
+
+    @Override
+    public double visit(IfThenElse pIfThenElse) {
+        if(pIfThenElse.getConf().accept(this)==1){
+            pIfThenElse.getThen().accept(this);
+        }else{
+            pIfThenElse.getElse().accept(this);
+        }
+        return 0;
+    }
 }
