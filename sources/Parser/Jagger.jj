@@ -38,7 +38,7 @@ void mainloop():
 { Exp a; }
 {
     (
-      a=ifScope() <EOL> { 
+      a=printScope() <EOL> { 
                              System.out.println(a.accept(new VisitorEval())); }
     )*
     <EOF>
@@ -46,10 +46,10 @@ void mainloop():
 
 
 Exp ifScope():
-{ Exp e, ifExp, thenExp, elseExp; }
+{ Exp ifExp, thenExp, elseExp; }
 {
-	  <IF> ifExp=cond() <THEN> thenExp=cond() <ELSE> elseExp=cond() { return new Condition(ifExp, thenExp, elseExp); }
-	| e=printScope() { return e; }
+	(<IF> ifExp=cond() <THEN> thenExp=cond() <ELSE> elseExp=cond() { return new IfThenElse(ifExp, thenExp, elseExp); }
+	| ifExp=cond()) { return ifExp; }
 }
 
 
@@ -58,7 +58,7 @@ Exp printScope():
 {Exp e;}
 {
     <PRINT><LRB> e=cond() <RRB> {return new Print(e);}
-    | e=cond() {return e;}
+    | e=ifScope() {return e;}
 }
 
 // Expression (the axiom).
@@ -68,8 +68,8 @@ Exp expression():
 {
     a=term()
     (
-      "+" b=expression() { return new Add(a,b); }
-    | "-" b=expression() { return new Sub(a,b); }
+      "+" b=term() { return new Add(a,b); }
+    | "-" b=term() { return new Sub(a,b); }
     )? { return a; }
 }
 
@@ -104,14 +104,14 @@ Exp term():
 }
 
 Exp Unary():
-{ Exp e; }
+{ Exp a; }
 {
-    e=factor()
+   
     (
-      "+" e=factor() { return new Plus(e); }
-    | "-" e=factor() { return new Minus(e);  }
-    
-    ) {return e;}
+     "+" a=factor() { return new Plus(a); }
+    | "-" a=factor() { return new Minus(a);  }
+    |a=factor()
+    ) {return a;}
 }
 
 

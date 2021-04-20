@@ -4,7 +4,7 @@ SRCDIR=sources/
 TESTDIR=test/
 BUILDDIR=build/
 
-SRCDIRS=ast/
+SRCDIRS=AST/
 
 SOURCES=$(foreach dir, $(SRCDIRS), $(wildcard $(SRCDIR)$(dir)*.java))
 

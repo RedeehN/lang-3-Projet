@@ -1,4 +1,3 @@
-
 public class VisitorEval extends Visitor{
 
     public VisitorEval(){
@@ -87,7 +86,7 @@ public class VisitorEval extends Visitor{
 
     @Override
     public double visit(Print pPrint) {
-        double val =pPrint.accept(this);
+        double val =pPrint.getaExp().accept(this);
         
         return val;
     }
