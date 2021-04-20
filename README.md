@@ -8,8 +8,8 @@ https://github.com/akimd/jagger
 On a pas fait de make check
 On est allé jusqu'au support de if-then-else   
 
-Pour tester 
-make
-cd build
-java Jagger
+Pour tester:
+1) make
+2) cd build
+3) java Jagger
 
